@@ -8,7 +8,7 @@
 	if ($Hora > 12 && $Hora <= 18 ) { $p=$p+5;$p1=$p1+1; }
 	if ($Hora > 18) { $p=$p+6;$p1=$p1+2; }
 // Consultamos el archivo xml de aemet y recogemos los datos.
-	$url = 'http://www.aemet.es/xml/municipios/localidad_47186.xml';
+	$url = 'http://www.aemet.es/xml/municipios/localidad_28115.xml';
 	$tiempo = simplexml_load_file($url);
 // Si valor cielo es nulo ajustamos con el siguiente periodo. 	
 	$cielo = $tiempo->prediccion->dia[0]->estado_cielo[$p];
