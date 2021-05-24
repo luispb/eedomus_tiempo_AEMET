@@ -1,6 +1,15 @@
 <?php
 // Calculamos la hora actual y hacemos los ajustes para poder encajar en el periodo de tiempo del archivo xml de aemet.
+	date_default_timezone_set('Europe/Madrid');	
 	$Hora = date("H")+1;
+	$fechaactualizacion = date('d/m/Y h:i:s a', time());
+
+	// echo "Variable Hora=";
+	// echo $Hora;
+	// echo "\n\t";
+	// echo "Variable fechaactualizacion=";
+	// echo $fechaactualizacion;
+
 	$p = 0; //Variable para calcular el periodo del dia[0] (hoy);
 	$p1 = 0; //Variable para calcular el periodo en temperatura y humedad relativa.
 	if ($Hora <= 6) { $p=$p+3; }
@@ -20,6 +29,13 @@
 // Ajustamos el icono del cielo en funcion del dia y la noche. Aemet lo contempla pero no lo usa.
 // Primero comprobamos si el codigo no tiene una n, si es asi comprobamos la hora y ajustamos.
 	$hayn = strpos($cielo,'n');
+
+// Debug de variables. Descomentar para ejecutar
+	// echo "Variable cielo=";
+	// echo $cielo;
+	// echo "Variable hayn=";
+	// echo $hayn;
+
 	if ($hayn === false) { if ($Hora-1 <= 7 || $Hora-1 >= 10 ) { $cielo=$cielo+"n"; } }
 // Generamos un xml personalizado con las condiciones actuales.
 	header("Content-type: text/xml");
@@ -31,6 +47,9 @@
 	echo "<provincia>\n\t";
 	echo $tiempo->provincia;echo"\n\t";
 	echo "</provincia>\n\t";
+	echo "<fechaactualizacion>\n\t";
+	echo $fechaactualizacion;echo"\n\t";
+	echo "</fechaactualizacion>\n\t";
 	echo "<probprecipitacion>\n\t";
 	echo $tiempo->prediccion->dia[0]->prob_precipitacion[$p];echo"\n\t";
 	echo "</probprecipitacion>\n\t";
